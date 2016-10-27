@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_votecontestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="db_votecontestModelStoreContainer">
+          <EntitySet Name="Round" EntityType="db_votecontestModel.Store.Round" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="db_votecontestModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="db_votecontestModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Video" EntityType="db_votecontestModel.Store.Video" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="VotingVideo" EntityType="db_votecontestModel.Store.VotingVideo" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Video_Round" Association="db_votecontestModel.Store.FK_Video_Round">
+            <End Role="Round" EntitySet="Round" />
+            <End Role="Video" EntitySet="Video" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VotingVideo_User" Association="db_votecontestModel.Store.FK_VotingVideo_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="VotingVideo" EntitySet="VotingVideo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VotingVideo_Video" Association="db_votecontestModel.Store.FK_VotingVideo_Video">
+            <End Role="Video" EntitySet="Video" />
+            <End Role="VotingVideo" EntitySet="VotingVideo" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Round">
+          <Key>
+            <PropertyRef Name="idRound" />
+          </Key>
+          <Property Name="idRound" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="nameRound" Type="nvarchar" MaxLength="50" />
+          <Property Name="startDate" Type="datetime" />
+          <Property Name="endDate" Type="datetime" />
+          <Property Name="ruleRound" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="emailUser" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="idVideo" />
+          </Key>
+          <Property Name="idVideo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="titleVideo" Type="nvarchar" MaxLength="50" />
+          <Property Name="authorVideo" Type="nvarchar" MaxLength="20" />
+          <Property Name="describeVideo" Type="nvarchar(max)" />
+          <Property Name="urlVideo" Type="nvarchar" MaxLength="50" />
+          <Property Name="idRound" Type="int" />
+          <Property Name="createDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VotingVideo">
+          <Key>
+            <PropertyRef Name="idVotingVideo" />
+          </Key>
+          <Property Name="idVotingVideo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idVideo" Type="int" />
+          <Property Name="idUser" Type="int" />
+        </EntityType>
+        <Association Name="FK_Video_Round">
+          <End Role="Round" Type="db_votecontestModel.Store.Round" Multiplicity="0..1" />
+          <End Role="Video" Type="db_votecontestModel.Store.Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Round">
+              <PropertyRef Name="idRound" />
+            </Principal>
+            <Dependent Role="Video">
+              <PropertyRef Name="idRound" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VotingVideo_User">
+          <End Role="User" Type="db_votecontestModel.Store.User" Multiplicity="0..1" />
+          <End Role="VotingVideo" Type="db_votecontestModel.Store.VotingVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="VotingVideo">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VotingVideo_Video">
+          <End Role="Video" Type="db_votecontestModel.Store.Video" Multiplicity="0..1" />
+          <End Role="VotingVideo" Type="db_votecontestModel.Store.VotingVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Video">
+              <PropertyRef Name="idVideo" />
+            </Principal>
+            <Dependent Role="VotingVideo">
+              <PropertyRef Name="idVideo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_votecontestModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="db_votecontestEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Rounds" EntityType="db_votecontestModel.Round" />
+          <EntitySet Name="sysdiagrams" EntityType="db_votecontestModel.sysdiagram" />
+          <EntitySet Name="Users" EntityType="db_votecontestModel.User" />
+          <EntitySet Name="Videos" EntityType="db_votecontestModel.Video" />
+          <EntitySet Name="VotingVideos" EntityType="db_votecontestModel.VotingVideo" />
+          <AssociationSet Name="FK_Video_Round" Association="db_votecontestModel.FK_Video_Round">
+            <End Role="Round" EntitySet="Rounds" />
+            <End Role="Video" EntitySet="Videos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VotingVideo_User" Association="db_votecontestModel.FK_VotingVideo_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="VotingVideo" EntitySet="VotingVideos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VotingVideo_Video" Association="db_votecontestModel.FK_VotingVideo_Video">
+            <End Role="Video" EntitySet="Videos" />
+            <End Role="VotingVideo" EntitySet="VotingVideos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Round">
+          <Key>
+            <PropertyRef Name="idRound" />
+          </Key>
+          <Property Name="idRound" Type="Int32" Nullable="false" />
+          <Property Name="nameRound" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="startDate" Type="DateTime" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Precision="3" />
+          <Property Name="ruleRound" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Videos" Relationship="db_votecontestModel.FK_Video_Round" FromRole="Round" ToRole="Video" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="Int32" Nullable="false" />
+          <Property Name="emailUser" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="VotingVideos" Relationship="db_votecontestModel.FK_VotingVideo_User" FromRole="User" ToRole="VotingVideo" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="idVideo" />
+          </Key>
+          <Property Name="idVideo" Type="Int32" Nullable="false" />
+          <Property Name="titleVideo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="authorVideo" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="describeVideo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="urlVideo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="idRound" Type="Int32" />
+          <NavigationProperty Name="Round" Relationship="db_votecontestModel.FK_Video_Round" FromRole="Video" ToRole="Round" />
+          <NavigationProperty Name="VotingVideos" Relationship="db_votecontestModel.FK_VotingVideo_Video" FromRole="Video" ToRole="VotingVideo" />
+          <Property Type="DateTime" Name="createDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="VotingVideo">
+          <Key>
+            <PropertyRef Name="idVotingVideo" />
+          </Key>
+          <Property Name="idVotingVideo" Type="Int32" Nullable="false" />
+          <Property Name="idVideo" Type="Int32" />
+          <Property Name="idUser" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="db_votecontestModel.FK_VotingVideo_User" FromRole="VotingVideo" ToRole="User" />
+          <NavigationProperty Name="Video" Relationship="db_votecontestModel.FK_VotingVideo_Video" FromRole="VotingVideo" ToRole="Video" />
+        </EntityType>
+        <Association Name="FK_Video_Round">
+          <End Role="Round" Type="db_votecontestModel.Round" Multiplicity="0..1" />
+          <End Role="Video" Type="db_votecontestModel.Video" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Round">
+              <PropertyRef Name="idRound" />
+            </Principal>
+            <Dependent Role="Video">
+              <PropertyRef Name="idRound" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VotingVideo_User">
+          <End Role="User" Type="db_votecontestModel.User" Multiplicity="0..1" />
+          <End Role="VotingVideo" Type="db_votecontestModel.VotingVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="VotingVideo">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VotingVideo_Video">
+          <End Role="Video" Type="db_votecontestModel.Video" Multiplicity="0..1" />
+          <End Role="VotingVideo" Type="db_votecontestModel.VotingVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Video">
+              <PropertyRef Name="idVideo" />
+            </Principal>
+            <Dependent Role="VotingVideo">
+              <PropertyRef Name="idVideo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_votecontestModelStoreContainer" CdmEntityContainer="db_votecontestEntities">
+          <EntitySetMapping Name="Rounds">
+            <EntityTypeMapping TypeName="db_votecontestModel.Round">
+              <MappingFragment StoreEntitySet="Round">
+                <ScalarProperty Name="idRound" ColumnName="idRound" />
+                <ScalarProperty Name="nameRound" ColumnName="nameRound" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="ruleRound" ColumnName="ruleRound" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="db_votecontestModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="db_votecontestModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="emailUser" ColumnName="emailUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Videos">
+            <EntityTypeMapping TypeName="db_votecontestModel.Video">
+              <MappingFragment StoreEntitySet="Video">
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="idVideo" ColumnName="idVideo" />
+                <ScalarProperty Name="titleVideo" ColumnName="titleVideo" />
+                <ScalarProperty Name="authorVideo" ColumnName="authorVideo" />
+                <ScalarProperty Name="describeVideo" ColumnName="describeVideo" />
+                <ScalarProperty Name="urlVideo" ColumnName="urlVideo" />
+                <ScalarProperty Name="idRound" ColumnName="idRound" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VotingVideos">
+            <EntityTypeMapping TypeName="db_votecontestModel.VotingVideo">
+              <MappingFragment StoreEntitySet="VotingVideo">
+                <ScalarProperty Name="idVotingVideo" ColumnName="idVotingVideo" />
+                <ScalarProperty Name="idVideo" ColumnName="idVideo" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

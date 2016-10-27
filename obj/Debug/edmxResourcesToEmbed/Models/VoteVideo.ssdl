@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_votecontestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="db_votecontestModelStoreContainer">
+    <EntitySet Name="Round" EntityType="db_votecontestModel.Store.Round" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="db_votecontestModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="db_votecontestModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Video" EntityType="db_votecontestModel.Store.Video" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="VotingVideo" EntityType="db_votecontestModel.Store.VotingVideo" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Video_Round" Association="db_votecontestModel.Store.FK_Video_Round">
+      <End Role="Round" EntitySet="Round" />
+      <End Role="Video" EntitySet="Video" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VotingVideo_User" Association="db_votecontestModel.Store.FK_VotingVideo_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="VotingVideo" EntitySet="VotingVideo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VotingVideo_Video" Association="db_votecontestModel.Store.FK_VotingVideo_Video">
+      <End Role="Video" EntitySet="Video" />
+      <End Role="VotingVideo" EntitySet="VotingVideo" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Round">
+    <Key>
+      <PropertyRef Name="idRound" />
+    </Key>
+    <Property Name="idRound" Type="int" Nullable="false" />
+    <Property Name="nameRound" Type="nvarchar" MaxLength="50" />
+    <Property Name="startDate" Type="datetime" />
+    <Property Name="endDate" Type="datetime" />
+    <Property Name="ruleRound" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="int" Nullable="false" />
+    <Property Name="emailUser" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Video">
+    <Key>
+      <PropertyRef Name="idVideo" />
+    </Key>
+    <Property Name="idVideo" Type="int" Nullable="false" />
+    <Property Name="titleVideo" Type="nvarchar" MaxLength="50" />
+    <Property Name="authorVideo" Type="nvarchar" MaxLength="20" />
+    <Property Name="describeVideo" Type="nvarchar(max)" />
+    <Property Name="urlVideo" Type="nvarchar" MaxLength="50" />
+    <Property Name="idRound" Type="int" />
+  </EntityType>
+  <EntityType Name="VotingVideo">
+    <Key>
+      <PropertyRef Name="idVotingVideo" />
+    </Key>
+    <Property Name="idVotingVideo" Type="int" Nullable="false" />
+    <Property Name="idVideo" Type="int" />
+    <Property Name="idUser" Type="int" />
+  </EntityType>
+  <Association Name="FK_Video_Round">
+    <End Role="Round" Type="db_votecontestModel.Store.Round" Multiplicity="0..1" />
+    <End Role="Video" Type="db_votecontestModel.Store.Video" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Round">
+        <PropertyRef Name="idRound" />
+      </Principal>
+      <Dependent Role="Video">
+        <PropertyRef Name="idRound" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VotingVideo_User">
+    <End Role="User" Type="db_votecontestModel.Store.User" Multiplicity="0..1" />
+    <End Role="VotingVideo" Type="db_votecontestModel.Store.VotingVideo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="VotingVideo">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VotingVideo_Video">
+    <End Role="Video" Type="db_votecontestModel.Store.Video" Multiplicity="0..1" />
+    <End Role="VotingVideo" Type="db_votecontestModel.Store.VotingVideo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="idVideo" />
+      </Principal>
+      <Dependent Role="VotingVideo">
+        <PropertyRef Name="idVideo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

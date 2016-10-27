@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_votecontestModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="db_votecontestEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Rounds" EntityType="db_votecontestModel.Round" />
+    <EntitySet Name="sysdiagrams" EntityType="db_votecontestModel.sysdiagram" />
+    <EntitySet Name="Users" EntityType="db_votecontestModel.User" />
+    <EntitySet Name="Videos" EntityType="db_votecontestModel.Video" />
+    <EntitySet Name="VotingVideos" EntityType="db_votecontestModel.VotingVideo" />
+    <AssociationSet Name="FK_Video_Round" Association="db_votecontestModel.FK_Video_Round">
+      <End Role="Round" EntitySet="Rounds" />
+      <End Role="Video" EntitySet="Videos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VotingVideo_User" Association="db_votecontestModel.FK_VotingVideo_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="VotingVideo" EntitySet="VotingVideos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VotingVideo_Video" Association="db_votecontestModel.FK_VotingVideo_Video">
+      <End Role="Video" EntitySet="Videos" />
+      <End Role="VotingVideo" EntitySet="VotingVideos" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Round">
+    <Key>
+      <PropertyRef Name="idRound" />
+    </Key>
+    <Property Name="idRound" Type="Int32" Nullable="false" />
+    <Property Name="nameRound" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="startDate" Type="DateTime" Precision="3" />
+    <Property Name="endDate" Type="DateTime" Precision="3" />
+    <Property Name="ruleRound" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Videos" Relationship="db_votecontestModel.FK_Video_Round" FromRole="Round" ToRole="Video" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="Int32" Nullable="false" />
+    <Property Name="emailUser" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="VotingVideos" Relationship="db_votecontestModel.FK_VotingVideo_User" FromRole="User" ToRole="VotingVideo" />
+  </EntityType>
+  <EntityType Name="Video">
+    <Key>
+      <PropertyRef Name="idVideo" />
+    </Key>
+    <Property Name="idVideo" Type="Int32" Nullable="false" />
+    <Property Name="titleVideo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="authorVideo" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="describeVideo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="urlVideo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="idRound" Type="Int32" />
+    <NavigationProperty Name="Round" Relationship="db_votecontestModel.FK_Video_Round" FromRole="Video" ToRole="Round" />
+    <NavigationProperty Name="VotingVideos" Relationship="db_votecontestModel.FK_VotingVideo_Video" FromRole="Video" ToRole="VotingVideo" />
+  </EntityType>
+  <EntityType Name="VotingVideo">
+    <Key>
+      <PropertyRef Name="idVotingVideo" />
+    </Key>
+    <Property Name="idVotingVideo" Type="Int32" Nullable="false" />
+    <Property Name="idVideo" Type="Int32" />
+    <Property Name="idUser" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="db_votecontestModel.FK_VotingVideo_User" FromRole="VotingVideo" ToRole="User" />
+    <NavigationProperty Name="Video" Relationship="db_votecontestModel.FK_VotingVideo_Video" FromRole="VotingVideo" ToRole="Video" />
+  </EntityType>
+  <Association Name="FK_Video_Round">
+    <End Role="Round" Type="db_votecontestModel.Round" Multiplicity="0..1" />
+    <End Role="Video" Type="db_votecontestModel.Video" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Round">
+        <PropertyRef Name="idRound" />
+      </Principal>
+      <Dependent Role="Video">
+        <PropertyRef Name="idRound" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VotingVideo_User">
+    <End Role="User" Type="db_votecontestModel.User" Multiplicity="0..1" />
+    <End Role="VotingVideo" Type="db_votecontestModel.VotingVideo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="idUser" />
+      </Principal>
+      <Dependent Role="VotingVideo">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VotingVideo_Video">
+    <End Role="Video" Type="db_votecontestModel.Video" Multiplicity="0..1" />
+    <End Role="VotingVideo" Type="db_votecontestModel.VotingVideo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="idVideo" />
+      </Principal>
+      <Dependent Role="VotingVideo">
+        <PropertyRef Name="idVideo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
