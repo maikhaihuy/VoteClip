@@ -26,6 +26,7 @@ namespace VoteClip.Models
         public string urlVideo { get; set; }
         public Nullable<int> idRound { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
+        public string codeAuthor { get; set; }
     
         public virtual Round Round { get; set; }
         public virtual ICollection<VotingVideo> VotingVideos { get; set; }

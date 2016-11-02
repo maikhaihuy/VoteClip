@@ -1,4 +1,6 @@
-﻿@{
+﻿
+@model List<VoteClip.Models.Round>
+@{
     ViewBag.Title = "Index";
 }
 <div id="main">
@@ -10,19 +12,28 @@
             </h1>
             <p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
         </header>
+        @foreach (VoteClip.Models.Round round in Model)
+        {
+
+            <h2 style="margin-top:2em;">@round.nameRound</h2>
         <section class="tiles">
-            <article class="style1">
-                <span class="image">
-                    <img src="~/assets/images/pic01.jpg" alt="" />
-                </span>
-                <a href="generic.html">
-                    <h2>Magna</h2>
-                    <div class="content">
-                        <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                    </div>
-                </a>
-            </article>
-            <article class="style2">
+            @foreach (var video in round.Videos)
+            {
+                string thumbnail = "http://i3.ytimg.com/vi/" + video.urlVideo.Split('=')[1] + "/hqdefault.jpg";
+                <article class="style1">
+                    <span class="image">
+                        <img src="@thumbnail" alt="" />
+                    </span>
+                    <a href="@video.urlVideo">
+                        <h2>@video.titleVideo</h2>
+                        <div class="content">
+                            <p>@video.describeVideo</p>
+                        </div>
+                    </a>
+                </article>
+            }
+            
+            @*<article class="style2">
                 <span class="image">
                     <img src="~/assets/images/pic02.jpg" alt="" />
                 </span>
@@ -142,7 +153,8 @@
                         <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
                     </div>
                 </a>
-            </article>
+            </article>*@
         </section>
+        }
     </div>
 </div>

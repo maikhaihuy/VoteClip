@@ -140,9 +140,6 @@
       <DependentUpon>VoteVideo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RoundService.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>VoteVideo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>VoteVideo.tt</DependentUpon>
     </Compile>
@@ -172,6 +169,38 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\admin\css\main-style.css" />
+    <Content Include="assets\admin\css\style.css" />
+    <Content Include="assets\admin\font-awesome\css\font-awesome.css" />
+    <Content Include="assets\admin\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assets\admin\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\admin\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\admin\img\logo.png" />
+    <Content Include="assets\admin\img\user.jpg" />
+    <Content Include="assets\admin\plugins\bootstrap\bootstrap.css" />
+    <Content Include="assets\admin\plugins\bootstrap\bootstrap.js" />
+    <Content Include="assets\admin\plugins\bootstrap\bootstrap.min.js" />
+    <Content Include="assets\admin\plugins\dataTables\dataTables.bootstrap.css" />
+    <Content Include="assets\admin\plugins\dataTables\dataTables.bootstrap.js" />
+    <Content Include="assets\admin\plugins\dataTables\jquery.dataTables.js" />
+    <Content Include="assets\admin\plugins\flot\excanvas.min.js" />
+    <Content Include="assets\admin\plugins\flot\jquery.flot.js" />
+    <Content Include="assets\admin\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="assets\admin\plugins\flot\jquery.flot.resize.js" />
+    <Content Include="assets\admin\plugins\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="assets\admin\plugins\jquery-1.10.2.js" />
+    <Content Include="assets\admin\plugins\metisMenu\jquery.metisMenu.js" />
+    <Content Include="assets\admin\plugins\morris\morris-0.4.3.min.css" />
+    <Content Include="assets\admin\plugins\morris\morris.js" />
+    <Content Include="assets\admin\plugins\morris\raphael-2.1.0.min.js" />
+    <Content Include="assets\admin\plugins\pace\pace-theme-big-counter.css" />
+    <Content Include="assets\admin\plugins\pace\pace.js" />
+    <Content Include="assets\admin\plugins\social-buttons\social-buttons.css" />
+    <Content Include="assets\admin\plugins\timeline\timeline.css" />
+    <Content Include="assets\admin\scripts\dashboard-demo.js" />
+    <Content Include="assets\admin\scripts\flot-demo.js" />
+    <Content Include="assets\admin\scripts\morris-demo.js" />
+    <Content Include="assets\admin\scripts\siminta.js" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\ie8.css" />
     <Content Include="assets\css\ie9.css" />
@@ -300,6 +329,13 @@
     <Content Include="assets\sass\libs\_skel.scss" />
     <Content Include="assets\sass\libs\_vars.scss" />
     <Content Include="assets\sass\main.scss" />
+    <Content Include="assets\admin\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\admin\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\admin\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\admin\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assets\admin\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\admin\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\admin\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -334,6 +370,12 @@
     <Content Include="Views\About\Rule.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ListVideos.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Admin\EditRound.cshtml" />
+    <Content Include="Views\Admin\UpdateRound.cshtml" />
+    <Content Include="Views\Admin\GetVideo.cshtml" />
+    <Content Include="Views\Admin\UpdateVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

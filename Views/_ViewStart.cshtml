@@ -1,3 +1,4 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = (Request.Url.AbsoluteUri).Contains("admin") || (Request.Url.AbsoluteUri).Contains("Admin");
+    Layout = isAdmin ? "~/Views/Shared/_LayoutAdmin.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }

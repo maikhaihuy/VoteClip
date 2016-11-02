@@ -26,7 +26,6 @@ namespace VoteClip.Models
         }
     
         public DbSet<Round> Rounds { get; set; }
-        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Video> Videos { get; set; }
         public DbSet<VotingVideo> VotingVideos { get; set; }

@@ -1,0 +1,53 @@
+﻿@model VoteClip.Models.Round
+@{
+    ViewBag.Title = "EditRound";
+}
+<div id="page-wrapper">
+    <div class="row">
+        <!-- page header -->
+        <div class="col-lg-12">
+            <h1 class="page-header">Forms</h1>
+        </div>
+        <!--end page header -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Basic Form Elements
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form role="form" action="/Admin/UpdateRound" method="post">
+                                @Html.HiddenFor(m => m.idRound)
+                                <div class="form-group">
+                                    <label>Tên vòng thi</label>
+                                    @Html.TextBoxFor(m => m.nameRound, new { @class = "form-control" })
+                                    <p class="help-block">Nhập tên vòng thi.</p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày bắt đầu</label>
+                                    @Html.TextBoxFor(m => m.startDate, new { @class = "form-control" })
+                                    <p class="help-block">Định dạng: mm/dd/yyyy</p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày kết thúc</label>
+                                    @Html.TextBoxFor(m => m.endDate, new { @class = "form-control" })
+                                    <p class="help-block">Định dạng: mm/dd/yyyy</p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Luật</label>
+                                    @Html.TextAreaFor(m => m.ruleRound, new { @class = "form-control", rows = "3" })
+                                </div>
+                                <button type="reset" class="btn btn-success" onclick="location.href = '/Admin/EditRound?idRound=@Model.idRound'">Reset Button</button>
+                                <button type="submit" class="btn btn-primary">Submit Button</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

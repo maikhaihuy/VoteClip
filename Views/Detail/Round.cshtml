@@ -1,5 +1,33 @@
-﻿@{
+﻿@model List<VoteClip.Models.Video>
+@{
     ViewBag.Title = "Round";
+    VoteClip.Models.Round round = VoteClip.Models.RoundService.GetRoundById(ViewBag.IdRound);
 }
-
-<h2>Round</h2>
+<div id="main">
+    <div class="inner">
+        <header>
+            <h1>
+                @round.nameRound
+            </h1>
+            <p>@round.ruleRound</p>
+        </header>
+        
+        <section class="tiles">
+            @foreach (VoteClip.Models.Video video in Model)
+            {
+                string thumbnail = "http://i3.ytimg.com/vi/" + video.urlVideo.Split('=')[1] + "/hqdefault.jpg";
+                <article class="style1">
+                    <span class="image">
+                        <img src="@thumbnail" alt="" />
+                    </span>
+                    <a href="@video.urlVideo">
+                        <h2>@video.titleVideo</h2>
+                        <div class="content">
+                            <p>@video.describeVideo</p>
+                        </div>
+                    </a>
+                </article>
+            }
+        </section>
+    </div>
+</div>

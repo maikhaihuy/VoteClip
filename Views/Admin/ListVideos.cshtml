@@ -1,6 +1,8 @@
-﻿@model List<VoteClip.Models.Round>
+﻿@model List<VoteClip.Models.Video>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh sách video";
+    int idRound = ViewBag.IdRound;
+    VoteClip.Models.Round round = VoteClip.Models.RoundService.GetRoundById(idRound);
 }
 
 <!--  page-wrapper -->
@@ -9,7 +11,7 @@
     <div class="row">
         <!--  page header -->
         <div class="col-lg-12">
-            <h1 class="page-header">Cuộc thi abc</h1>
+            <h1 class="page-header">@round.nameRound</h1>
         </div>
         <!-- end  page header -->
     </div>
@@ -19,7 +21,7 @@
             <!-- Advanced Tables -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    ABC
+                    <button class="btn btn-primary" href="/Admin/GetVideo?idVideo=0">Thêm mới video</button>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -27,45 +29,41 @@
                             <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Tên vòng thi</th>
+                                    <th>Tên video</th>
+                                    <th>Tác giả</th>
+                                    <th>Mã số sinh viên</th>
                                     <th>Mô tả</th>
-                                    <th>Ngày bắt đầu</th>
-                                    <th>Ngày kết thúc</th>
+                                    <th>Url youtube</th>
+                                    <th>Số lượng vote</th>
                                     <th>Công cụ</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
                                     int index = 0;
-                                    foreach (VoteClip.Models.Round round in Model)
+                                    foreach (VoteClip.Models.Video video in Model)
                                     {
-                                        string classTr = "odd gradeC";
+                                        string classTr = "even gradeC";
                                         if (index % 2 == 0)
                                         {
                                             classTr = "odd gradeX";
                                         }
                                         <tr class="@classTr">
                                             <td>@index</td>
-                                            <td>@round.nameRound</td>
-                                            <td>@round.ruleRound</td>
-                                            <td>@round.startDate</td>
-                                            <td class="center">@round.endDate</td>
-                                            <td class="center">
-                                                <ul>
-                                                    <li>
-                                                        <a href="/Admin/ListVideos?idRound=@round.idRound">Danh sách video</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/Admin/EditRound?idRound=@round.idRound">Sửa</a>
-                                                    </li>
-                                                </ul>
-                                            </td>
+                                            <td>@video.titleVideo</td>
+                                            <td>@video.authorVideo</td>
+                                            <td>@video.codeAuthor</td>
+                                            <td class="center">@video.describeVideo</td>
+                                            <td class="center">@video.urlVideo</td>
+                                            <td class="center">@video.VotingVideos.Count</td>
+                                            <td><a href="/Admin/GetVideo?idVideo=@video.idVideo">Chỉnh sửa</a></td>
                                         </tr>
                                     }
                                 }
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
             <!--End Advanced Tables -->

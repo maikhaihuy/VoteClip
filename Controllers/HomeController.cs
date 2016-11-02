@@ -14,8 +14,9 @@ namespace VoteClip.Controllers
 
         public ActionResult Index()
         {
-            List<Video> listVideo = VideoService.GetVideosHome();
-            return View(listVideo);
+            List<Round> listRound = RoundService.GetAllRound();
+            //List<Video> listVideo = VideoService.GetVideosHome();
+            return View(listRound);
         }
     }
 }
