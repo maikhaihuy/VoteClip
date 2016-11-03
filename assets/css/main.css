@@ -2853,7 +2853,9 @@
 /* Header */
 
 	#header {
-		padding: 8em 0 0.1em 0 ;
+		padding: 2em 0 0.1em 0 ;
+        margin-bottom: 2em;
+        background-color: #f6f6f6;
 	}
 
 		#header .logo {

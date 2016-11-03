@@ -207,6 +207,8 @@
     <Content Include="assets\css\ie9.css" />
     <Content Include="assets\css\main.css" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\images\cover.jpg" />
+    <Content Include="assets\images\logo.png" />
     <Content Include="assets\images\logo.svg" />
     <Content Include="assets\images\pic01.jpg" />
     <Content Include="assets\images\pic02.jpg" />
@@ -223,6 +225,7 @@
     <Content Include="assets\images\pic13.jpg" />
     <Content Include="assets\images\pic14.jpg" />
     <Content Include="assets\images\pic15.jpg" />
+    <Content Include="assets\images\poster.jpg" />
     <Content Include="assets\js\ie\html5shiv.js" />
     <Content Include="assets\js\ie\respond.min.js" />
     <Content Include="assets\js\jquery.min.js" />
