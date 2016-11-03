@@ -9,29 +9,33 @@
         <header>
             <img src="~/assets/images/cover.jpg" width="100%" style="border-radius: 8px;"/>
         </header>
+        <hr />
         @foreach (VoteClip.Models.Round round in Model)
         {
 
             <h2 style="margin-top:2em;"><a href="/Detail/Round?idRound=@round.idRound">@round.nameRound</a></h2>
         <section class="tiles">
             @{
-                var listVideo = VideoService.GetAllVideosByMost(round.idRound);
-                foreach (var video in listVideo)
+            var listVideo = VideoService.GetAllVideosByMost(round.idRound);
+            int indexVideo = 1;
+            foreach (var video in listVideo)
             {
                 string thumbnail = "http://i3.ytimg.com/vi/" + video.urlVideo.Split('=')[1] + "/hqdefault.jpg";
-                <article class="style1">
+                string classVideo = "style" + indexVideo;
+                <article class="@classVideo">
                     <span class="image">
                         <img src="@thumbnail" alt="" />
                     </span>
-                    <a href="@video.urlVideo">
+                    <a href="/Detail/Video?idVideo=@video.idVideo">
                         <h2>@video.titleVideo</h2>
                         <div class="content">
-                            <p>@video.describeVideo</p>
+                            <p>@video.authorVideo</p>
+                            <p>@VotingVideoService.GetListUserVote(video.idVideo).Count() lượt vote</p>
                         </div>
                     </a>
                 </article>
-            }
-
+                indexVideo = indexVideo + 1;
+                    }
             }
             @*<article class="style2">
                 <span class="image">
@@ -155,6 +159,12 @@
                 </a>
             </article>*@
         </section>
-        }
+
+        <hr />
+                }
+        <section>
+            <img src="~/assets/images/poster.jpg" width="100%" style="border-radius: 8px;" />
+        </section>
+        
     </div>
 </div>
