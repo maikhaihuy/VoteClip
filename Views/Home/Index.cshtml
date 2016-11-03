@@ -1,4 +1,5 @@
 ﻿
+@using VoteClip.Models
 @model List<VoteClip.Models.Round>
 @{
     ViewBag.Title = "Index";
@@ -17,7 +18,9 @@
 
             <h2 style="margin-top:2em;">@round.nameRound</h2>
         <section class="tiles">
-            @foreach (var video in round.Videos)
+            @{
+                var listVideo = VideoService.GetAllVideosByMost(round.idRound);
+                foreach (var video in listVideo)
             {
                 string thumbnail = "http://i3.ytimg.com/vi/" + video.urlVideo.Split('=')[1] + "/hqdefault.jpg";
                 <article class="style1">
@@ -32,7 +35,8 @@
                     </a>
                 </article>
             }
-            
+
+            }
             @*<article class="style2">
                 <span class="image">
                     <img src="~/assets/images/pic02.jpg" alt="" />

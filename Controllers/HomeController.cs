@@ -15,7 +15,11 @@ namespace VoteClip.Controllers
         public ActionResult Index()
         {
             List<Round> listRound = RoundService.GetAllRound();
-            //List<Video> listVideo = VideoService.GetVideosHome();
+            foreach (Round round in listRound)
+            {
+                List<Video> listVideo = VideoService.GetAllVideosByMost(round.idRound);
+                round.Videos = listVideo;
+            }
             return View(listRound);
         }
     }

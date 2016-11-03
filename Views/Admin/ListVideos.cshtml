@@ -1,4 +1,5 @@
-﻿@model List<VoteClip.Models.Video>
+﻿@using VoteClip.Models
+@model List<VoteClip.Models.Video>
 @{
     ViewBag.Title = "Danh sách video";
     int idRound = ViewBag.IdRound;
@@ -21,7 +22,7 @@
             <!-- Advanced Tables -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <button class="btn btn-primary" href="/Admin/GetVideo?idVideo=0">Thêm mới video</button>
+                    <button class="btn btn-primary" onclick="location.href = '/Admin/GetVideo?idVideo=0'">Thêm mới video</button>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -55,7 +56,7 @@
                                             <td>@video.codeAuthor</td>
                                             <td class="center">@video.describeVideo</td>
                                             <td class="center">@video.urlVideo</td>
-                                            <td class="center">@video.VotingVideos.Count</td>
+                                            <td class="center">@VotingVideoService.GetListUserVote(video.idVideo).Count()</td>
                                             <td><a href="/Admin/GetVideo?idVideo=@video.idVideo">Chỉnh sửa</a></td>
                                         </tr>
                                     }
