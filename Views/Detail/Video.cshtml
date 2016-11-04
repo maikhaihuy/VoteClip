@@ -4,6 +4,7 @@
     ViewBag.Title = "Video";
     Round round = RoundService.GetRoundById((int)Model.idRound);
     string urlEmbedded = "https://www.youtube.com/embed/" + Model.urlVideo.Split('=')[1];
+    string urlFull = Request.Url.ToString();
 }
 
 <div id="main">
@@ -29,8 +30,45 @@
             </section>
             <div style="float:right; margin-top:1em">
                 <h3>@VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt vote</h3>
-                <a href="#" class="button special small">Vote</a>
+                @*<button id="btnVote" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voteModal">Vote</button>*@
+                <button type="button" class="btn btn-info btn-lg" id="btnAgree">Open Modal</button>
             </div>
         </div>
+        
+        <div class="fb-comments" data-href="@urlFull" data-numposts="5" width="100%"></div>
+    </div>
 </div>
-</div>
+<!-- Modal -->
+@*<div id="voteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="margin: 1em">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Xác nhận bình chọn</h4>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn bình chọn cho video này?</p>
+                <p class="text-danger">Bạn chỉ được bình chọn một lần duy nhất.</p>
+            </div>
+            <div class="modal-footer" style="align-content: center;">
+                <button type="button" id="btnAgree" class="btn btn-ok" data-dismiss="modal">Bình chọn</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+<script>
+    $(document)
+        .ready(function(data) {
+            $('#btnAgree').click(function () {
+                bootbox.confirm("Bạn chắc chắn muốn bình chọn cho video này? \n Bạn chỉ được bình chọn một lần duy nhất.", function (result) {
+                    if(result == "true" || result == true) {
+                        FB.getLoginStatus(function (response) {
+                            statusChangeCallback(response);
+                        });
+                    }
+                });
+            });
+        });
+    
+</script>
