@@ -44,7 +44,7 @@ namespace VoteClip.Models
             try
             {
                 var listVideoAll =
-                    dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderByDescending(x => x.VotingVideos.Count);
+                    dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderByDescending(x => x.VotingVideos.Count());
                 total = listVideoAll.Count();
 
                 listVideo = listVideoAll.Skip(skip).Take(count).ToList();
@@ -66,7 +66,7 @@ namespace VoteClip.Models
             db_votecontestEntities dbVoteContest = new db_votecontestEntities();
             try
             {
-                var listVideoAll = dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderBy(x => x.createDate);
+                var listVideoAll = dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderByDescending(x => x.createDate);
                 total = listVideoAll.Count();
 
                 listVideo = listVideoAll.Skip(skip).Take(count).ToList();
@@ -89,7 +89,7 @@ namespace VoteClip.Models
             db_votecontestEntities dbVoteContest = new db_votecontestEntities();
             try
             {
-                listVideo = dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderBy(x => x.createDate).ToList();
+                listVideo = dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderByDescending(x => x.createDate).ToList();
             }
             finally
             {
@@ -108,7 +108,26 @@ namespace VoteClip.Models
             db_votecontestEntities dbVoteContest = new db_votecontestEntities();
             try
             {
-                listVideo = dbVoteContest.Videos.Where(x => x.idRound == idRound).ToList();
+                listVideo = dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderByDescending(x => x.VotingVideos.Count()).ToList();
+            }
+            finally
+            {
+                if (dbVoteContest != null)
+                {
+                    ((IDisposable)dbVoteContest).Dispose();
+                }
+            }
+            return listVideo;
+        }
+
+        public static List<Video> GetHomeVideosByRound(int idRound)
+        {
+            List<Video> listVideo = new List<Video>();
+
+            db_votecontestEntities dbVoteContest = new db_votecontestEntities();
+            try
+            {
+                listVideo = dbVoteContest.Videos.Where(x => x.idRound == idRound).OrderByDescending(x => x.VotingVideos.Count()).Take(6).ToList();
             }
             finally
             {
@@ -157,6 +176,7 @@ namespace VoteClip.Models
                 }
                 else
                 {
+                    video.createDate = DateTime.Now;
                     newvideo = dbVoteContest.Videos.Add(video);
                 }
 

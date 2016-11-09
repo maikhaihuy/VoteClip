@@ -29,9 +29,28 @@
             </pre>
             </section>
             <div style="float:right; margin-top:1em">
-                <h3>@VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt vote</h3>
                 @*<button id="btnVote" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voteModal">Vote</button>*@
-                <button type="button" class="btn btn-info btn-lg" id="btnAgree">Open Modal</button>
+                @{ if (Model.authorVideo.Contains("vs."))
+                    {
+                        int indexCode = Model.codeAuthor.IndexOf(" vs. ");
+                        string codeAuthor1 = Model.codeAuthor.Substring(0, indexCode);
+                        string codeAuthor2 = Model.codeAuthor.Substring(indexCode + 5, Model.codeAuthor.Length - indexCode - 5);
+                        indexCode = Model.authorVideo.IndexOf(" vs. ");
+                        string nameAuthor1 = Model.authorVideo.Substring(0, indexCode);
+                        string nameAuthor2 = Model.authorVideo.Substring(indexCode + 5, Model.authorVideo.Length - indexCode - 5);
+
+                        <h3>@codeAuthor1 - @nameAuthor1: @VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt</h3>
+                        <h3>@codeAuthor2 - @nameAuthor2: @VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt</h3>
+                        <button type="button" class="btn btn-info btn-lg" id="btnAgree">Vote @codeAuthor1</button>
+                        <button type="button" class="btn btn-info btn-lg" id="btnAgree">Vote @codeAuthor2</button>
+                    }
+                    else
+                    {
+
+                        <h3>@VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt vote</h3>
+                        <button type="button" class="btn btn-info btn-lg" id="btnAgree">Vote @Model.codeAuthor</button>
+                    }
+                }
             </div>
         </div>
         
@@ -59,16 +78,68 @@
 </div>*@
 <script>
     $(document)
-        .ready(function(data) {
+        .ready(function (data) {
+            var idVideo = "@Model.idVideo";
+            var codeAuthor = "@Model.codeAuthor";
+
             $('#btnAgree').click(function () {
-                bootbox.confirm("Bạn chắc chắn muốn bình chọn cho video này? \n Bạn chỉ được bình chọn một lần duy nhất.", function (result) {
+                bootbox.confirm("Bạn chắc chắn muốn bình chọn cho video này? \n Bạn chỉ được bình chọn một lần duy nhất và không thể bỏ bình chọn.", function (result) {
                     if(result == "true" || result == true) {
+                        //FB.login(function (response) {
+                        //    console.log('vote ' + idVideo + ' code la ' + codeAuthor);
+                        //    voteClip(idVideo, codeAuthor, response);
+                        //}, { scope: 'email' });
                         FB.getLoginStatus(function (response) {
-                            statusChangeCallback(response);
+                            voteClipCallback(idVideo, codeAuthor, response);
                         });
                     }
                 });
             });
         });
-    
+    function voteClipCallback(idVideo, codeAuthor, response) {
+        console.log('statusChangeCallback');
+        console.log(response);
+        // The response object is returned with a status field that lets the
+        // app know the current login status of the person.
+        // Full docs on the response object can be found in the documentation
+        // for FB.getLoginStatus().
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            voteClip(idVideo, codeAuthor);
+        } else if (response.status === 'not_authorized') {
+            // The person is logged into Facebook, but not your app.
+            document.getElementById('status').innerHTML = 'Please log ' +
+                'into this app.';
+            FB.login(function (response) {
+                // Handle the response object, like in statusChangeCallback() in our demo
+                // code.
+                voteClip(idVideo, codeAuthor);
+            }, {scope: 'email'});
+        } else {
+            // The person is not logged into Facebook, so we're not sure if
+            // they are logged into this app or not.
+            document.getElementById('status').innerHTML = 'Please log ' +
+                'into Facebook.';
+        }
+    }
+    function voteClip(idVideo, codeAuthor) {
+        FB.api('/me', function (response) {
+            console.log(response);
+            var infoUserVote = response.id;
+            $.ajax({
+                url: "/Detail/VoteVideo?idVideo=" + idVideo + "&codeAuthor=" + codeAuthor + "&email=" + infoUserVote
+            }).done(function (data) {
+                //console.log(data.data);
+                if (data.response == true || data.response == 'true') {
+                    alert('Bạn đã bình chọn thành công cho video này');
+                }
+                else {
+                    alert('Bạn đã bình chọn bạn không thể bình chọn tiếp.');
+                }
+            }).fail(function (data) {
+                console.log(data);
+            });
+            //console.log('Vote cho ' + idVideo + ' mssv la ' + codeAuthor + ' email la ' + infoUserVote);
+        });
+    }
 </script>

@@ -41,5 +41,19 @@ namespace VoteClip.Controllers
             Video video = VideoService.GetVideoById(idVideo);
             return View(video);
         }
+
+        public ActionResult VoteVideo(int idVideo, string codeAuthor, string email)
+        {
+            User user = UserService.AddUser(email);
+            Video videoVote = VotingVideoService.AddVote(idVideo, codeAuthor, user.idUser);
+            bool isVoteSuccess = false;
+
+            if(videoVote.idVideo == idVideo)
+            {
+                isVoteSuccess = true;
+            }
+
+            return base.Json(new { response = isVoteSuccess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

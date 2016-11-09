@@ -29,5 +29,6 @@ namespace VoteClip.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Video> Videos { get; set; }
         public DbSet<VotingVideo> VotingVideos { get; set; }
+        public DbSet<Tag> Tags { get; set; }
     }
 }

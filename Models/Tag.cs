@@ -12,14 +12,10 @@ namespace VoteClip.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VotingVideo
+    public partial class Tag
     {
-        public int idVotingVideo { get; set; }
-        public Nullable<int> idVideo { get; set; }
-        public Nullable<int> idUser { get; set; }
-        public string codeAuthor { get; set; }
-    
-        public virtual User User { get; set; }
-        public virtual Video Video { get; set; }
+        public int idTag { get; set; }
+        public string nameTag { get; set; }
+        public string valueTag { get; set; }
     }
 }

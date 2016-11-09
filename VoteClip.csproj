@@ -142,6 +142,9 @@
       <DependentUpon>VoteVideo.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RoundService.cs" />
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>VoteVideo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>VoteVideo.tt</DependentUpon>
     </Compile>
@@ -430,8 +433,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>if not exist “$(WebProjectOutputDir)\bin\Roslyn” md “$(WebProjectOutputDir)\bin\Roslyn”
-start /MIN xcopy /s /y /R “$(OutDir)roslyn\*.*” “$(WebProjectOutputDir)\bin\Roslyn”</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

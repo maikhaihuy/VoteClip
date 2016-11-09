@@ -10,13 +10,33 @@
             <img src="~/assets/images/cover.jpg" width="100%" style="border-radius: 8px;"/>
         </header>
         <hr />
+        
+        <div id="cover">
+            <section>
+                <h2>Giới thiệu khoa Luật</h2>
+                <div class="videoWrapper">
+                    <iframe src="https://www.youtube.com/embed/UZjuizEYU9g" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </section>
+            <section>
+                <h2>Follow</h2>
+                <div class="fb-page" data-href="https://www.facebook.com/khoaluatdhtdt.tdt.edu.vn" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/khoaluatdhtdt.tdt.edu.vn" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/khoaluatdhtdt.tdt.edu.vn">Khoa Luật ĐH Tôn Đức Thắng</a></blockquote>
+                </div>
+            </section>
+        </div>    
+
+        <hr />
+
+        <h2>Video nổi bật</h2>
+
         @foreach (VoteClip.Models.Round round in Model)
         {
 
-            <h2 style="margin-top:2em;"><a href="/Detail/Round?idRound=@round.idRound">@round.nameRound</a></h2>
+            <h3 style="margin-top:2em;"><a href="/Detail/Round?idRound=@round.idRound">@round.nameRound</a></h3>
         <section class="tiles">
             @{
-            var listVideo = VideoService.GetAllVideosByMost(round.idRound);
+            var listVideo = VideoService.GetHomeVideosByRound(round.idRound);
             int indexVideo = 1;
             foreach (var video in listVideo)
             {
@@ -159,9 +179,9 @@
                 </a>
             </article>*@
         </section>
-
-        <hr />
                 }
+        <hr />
+        <h2>Giải thưởng</h2>
         <section>
             <img src="~/assets/images/poster.jpg" width="100%" style="border-radius: 8px;" />
         </section>

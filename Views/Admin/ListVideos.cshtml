@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                                 @{
-                                    int index = 0;
+                                    int index = 1;
                                     foreach (VoteClip.Models.Video video in Model)
                                     {
                                         string classTr = "even gradeC";
@@ -59,6 +59,7 @@
                                             <td class="center">@VotingVideoService.GetListUserVote(video.idVideo).Count()</td>
                                             <td><a href="/Admin/GetVideo?idVideo=@video.idVideo">Chỉnh sửa</a></td>
                                         </tr>
+                                        index = index + 1;
                                     }
                                 }
                             </tbody>

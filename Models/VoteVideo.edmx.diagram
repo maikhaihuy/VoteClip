@@ -12,6 +12,7 @@
         <AssociationConnector Association="db_votecontestModel.FK_Video_Round" ManuallyRouted="false" />
         <AssociationConnector Association="db_votecontestModel.FK_VotingVideo_User" ManuallyRouted="false" />
         <AssociationConnector Association="db_votecontestModel.FK_VotingVideo_Video" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="db_votecontestModel.Tag" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

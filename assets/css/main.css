@@ -3194,11 +3194,11 @@
 /* Footer */
 
 	#footer {
-		padding: 2em 0 2em 0 ;
+		padding: 2em 0 1em 0 ;
 		background-color: #f6f6f6;
 	}
 
-		#footer > .inner {
+		/*#footer > .inner {
 			display: -moz-flex;
 			display: -webkit-flex;
 			display: -ms-flex;
@@ -3211,13 +3211,13 @@
 			-webkit-flex-direction: row;
 			-ms-flex-direction: row;
 			flex-direction: row;
-		}
+		}*/
 
 			#footer > .inner > * > :last-child {
 				margin-bottom: 0;
 			}
 
-			#footer > .inner section:nth-child(1) {
+			/*#footer > .inner section:nth-child(1) {
 				width: calc(66% - 2.5em);
 				margin-right: 2.5em;
 			}
@@ -3225,7 +3225,7 @@
 			#footer > .inner section:nth-child(2) {
 				width: calc(33% - 2.5em);
 				margin-left: 2.5em;
-			}
+			}*/
 
 			#footer > .inner .copyright {
 				width: 100%;
@@ -3354,6 +3354,101 @@
 			#wrapper > * > .inner {
 				padding: 0 1.25em;
 			}
+
+		}
+
+#cover {
+		padding: 2em 0 2em 0 ;
+	}
+
+		.inner >  #cover {
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			-ms-flex-wrap: wrap;
+			flex-wrap: wrap;
+			-moz-flex-direction: row;
+			-webkit-flex-direction: row;
+			-ms-flex-direction: row;
+			flex-direction: row;
+		}
+
+			.inner > #cover > * > :last-child {
+				margin-bottom: 0;
+			}
+
+			.inner  > #cover section:nth-child(1) {
+				width: calc(66% - 2.5em);
+				margin-right: 2.5em;
+			}
+
+			.inner > #cover section:nth-child(2) {
+				width: calc(33% - 2.5em);
+				margin-left: 2.5em;
+			}
+
+		@media screen and (max-width: 1280px) {
+
+			#cover {
+				padding: 5em 0 3em 0 ;
+			}
+
+				.inner > #cover section:nth-child(1) {
+					width: calc(66% - 1.25em);
+					margin-right: 1.25em;
+				}
+
+				.inner > #cover section:nth-child(2) {
+					width: calc(33% - 1.25em);
+					margin-left: 1.25em;
+				}
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+			.inner > #cover section:nth-child(1) {
+				width: 66%;
+				margin-right: 0;
+			}
+
+			.inner > #cover section:nth-child(2) {
+				width: calc(33% - 2.5em);
+				margin-left: 2.5em;
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			#cover {
+				padding: 3em 0 1em 0 ;
+			}
+
+				.inner > #cover {
+					-moz-flex-direction: column;
+					-webkit-flex-direction: column;
+					-ms-flex-direction: column;
+					flex-direction: column;
+				}
+
+					.inner > #cover section:nth-child(1) {
+						width: 100%;
+						margin-right: 0;
+						margin: 3em 0 0 0;
+					}
+
+					.inner > #cover section:nth-child(2) {
+						-moz-order: -1;
+						-webkit-order: -1;
+						-ms-order: -1;
+						order: -1;
+						width: 100%;
+						margin-left: 0;
+					}
 
 		}
 

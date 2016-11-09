@@ -66,7 +66,7 @@ namespace VoteClip.Controllers
         {
             video.idRound = idRound;
             Video newVideo = VideoService.UpdateVideo(video);
-            ViewBag.IdVideo = video.idVideo;
+            ViewBag.IdRound = idRound;
             return View();
         }
     }

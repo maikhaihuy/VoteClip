@@ -36,7 +36,7 @@
                             </thead>
                             <tbody>
                                 @{
-                                    int index = 0;
+                                    int index = 1;
                                     foreach (VoteClip.Models.Round round in Model)
                                     {
                                         string classTr = "odd gradeC";
@@ -61,6 +61,7 @@
                                                 </ul>
                                             </td>
                                         </tr>
+                                        index = index + 1;
                                     }
                                 }
                             </tbody>

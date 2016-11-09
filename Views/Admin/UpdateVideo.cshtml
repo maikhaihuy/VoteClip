@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "UpdateVideo";
-    int idVideo = ViewBag.IdVideo;
+    int idRound = ViewBag.IdRound;
 }
 
 <div id="page-wrapper">
@@ -12,6 +12,6 @@
         <!--end page header -->
     </div>
     <div class="row">
-        <button class="btn btn-success" onclick="location.href = '/Admin/GetVideo?idVideo=@idVideo'">Xác nhận</button>
+        <button class="btn btn-success" onclick="location.href = '/Admin/ListVideos?idRound=@idRound'">Quay lại danh sách video</button>
     </div>
 </div>
