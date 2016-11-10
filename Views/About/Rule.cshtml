@@ -1,5 +1,18 @@
-﻿@{
+﻿@using VoteClip.Models
+@model Tag
+@{
     ViewBag.Title = "Rule";
+    string file = Request.Url.Scheme + Request.Url.Host + Request.Url.Port;
 }
+<div id="main">
+    <div class="inner">
+        <h2>Thể lệ cuộc thi</h2>
+        <section style="height: 800px">
+            <object data="@Model.valueTag" type="application/pdf" width="100%" height="100%">
+                <p>Alternative text - include a link <a href="@Model.valueTag">to the PDF!</a>
+                </p>
+            </object>
+        </section>
 
-<h2>Rule</h2>
+    </div>
+</div>

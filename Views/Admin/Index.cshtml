@@ -10,6 +10,13 @@
         <!--  page header -->
         <div class="col-lg-12">
             <h1 class="page-header">Cuộc thi abc</h1>
+            @{
+                string msg = ViewBag.Message;
+                if (msg != null)
+                {
+                    <h4 class="page-header">@msg</h4>
+                }
+            }
         </div>
         <!-- end  page header -->
     </div>

@@ -138,6 +138,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\Round.cs">
       <DependentUpon>VoteVideo.tt</DependentUpon>
     </Compile>
@@ -145,6 +146,7 @@
     <Compile Include="Models\Tag.cs">
       <DependentUpon>VoteVideo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TagService.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>VoteVideo.tt</DependentUpon>
     </Compile>
@@ -214,7 +216,8 @@
     <Content Include="assets\css\main.css" />
     <Content Include="assets\css\modal.css" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
-    <Content Include="assets\images\cover.jpg" />
+    <Content Include="assets\js\pdfobject.min.js" />
+    <Content Include="uploads\cover.jpg" />
     <Content Include="assets\images\logo.png" />
     <Content Include="assets\images\logo.svg" />
     <Content Include="assets\images\pic01.jpg" />
@@ -232,7 +235,7 @@
     <Content Include="assets\images\pic13.jpg" />
     <Content Include="assets\images\pic14.jpg" />
     <Content Include="assets\images\pic15.jpg" />
-    <Content Include="assets\images\poster.jpg" />
+    <Content Include="uploads\poster.jpg" />
     <Content Include="assets\js\bootbox.js" />
     <Content Include="assets\js\bootstrap-managemodal.js" />
     <Content Include="assets\js\ie\html5shiv.js" />
@@ -394,6 +397,8 @@
     <Content Include="Views\Admin\UpdateRound.cshtml" />
     <Content Include="Views\Admin\GetVideo.cshtml" />
     <Content Include="Views\Admin\UpdateVideo.cshtml" />
+    <Content Include="Views\Admin\ListTags.cshtml" />
+    <Content Include="uploads\DIEU-LE-HUNG-BIEN-1.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

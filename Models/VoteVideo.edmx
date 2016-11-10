@@ -4,12 +4,31 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="db_votecontestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db_votecontestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="db_votecontestModelStoreContainer">
+          <EntitySet Name="Round" EntityType="db_votecontestModel.Store.Round" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tag" EntityType="db_votecontestModel.Store.Tag" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="db_votecontestModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Video" EntityType="db_votecontestModel.Store.Video" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="VotingVideo" EntityType="db_votecontestModel.Store.VotingVideo" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Video_Round" Association="db_votecontestModel.Store.FK_Video_Round">
+            <End Role="Round" EntitySet="Round" />
+            <End Role="Video" EntitySet="Video" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VotingVideo_User" Association="db_votecontestModel.Store.FK_VotingVideo_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="VotingVideo" EntitySet="VotingVideo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VotingVideo_Video" Association="db_votecontestModel.Store.FK_VotingVideo_Video">
+            <End Role="Video" EntitySet="Video" />
+            <End Role="VotingVideo" EntitySet="VotingVideo" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Round">
           <Key>
             <PropertyRef Name="idRound" />
           </Key>
-          <Property Name="idRound" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRound" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="nameRound" Type="nvarchar" MaxLength="50" />
           <Property Name="startDate" Type="datetime" />
           <Property Name="endDate" Type="datetime" />
@@ -19,22 +38,24 @@
           <Key>
             <PropertyRef Name="idTag" />
           </Key>
-          <Property Name="idTag" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTag" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="nameTag" Type="nvarchar" MaxLength="50" />
           <Property Name="valueTag" Type="nvarchar" MaxLength="50" />
+          <Property Name="keyTag" Type="nvarchar" MaxLength="50" />
+          <Property Name="describeTag" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="idUser" />
           </Key>
-          <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUser" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="emailUser" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Video">
           <Key>
             <PropertyRef Name="idVideo" />
           </Key>
-          <Property Name="idVideo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idVideo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="titleVideo" Type="nvarchar" MaxLength="50" />
           <Property Name="authorVideo" Type="nvarchar" MaxLength="20" />
           <Property Name="describeVideo" Type="nvarchar(max)" />
@@ -47,14 +68,14 @@
           <Key>
             <PropertyRef Name="idVotingVideo" />
           </Key>
-          <Property Name="idVotingVideo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idVotingVideo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="idVideo" Type="int" />
           <Property Name="idUser" Type="int" />
           <Property Name="codeAuthor" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Video_Round">
-          <End Role="Round" Type="Self.Round" Multiplicity="0..1" />
-          <End Role="Video" Type="Self.Video" Multiplicity="*" />
+          <End Role="Round" Type="db_votecontestModel.Store.Round" Multiplicity="0..1" />
+          <End Role="Video" Type="db_votecontestModel.Store.Video" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Round">
               <PropertyRef Name="idRound" />
@@ -65,8 +86,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VotingVideo_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="VotingVideo" Type="Self.VotingVideo" Multiplicity="*" />
+          <End Role="User" Type="db_votecontestModel.Store.User" Multiplicity="0..1" />
+          <End Role="VotingVideo" Type="db_votecontestModel.Store.VotingVideo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="idUser" />
@@ -77,8 +98,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VotingVideo_Video">
-          <End Role="Video" Type="Self.Video" Multiplicity="0..1" />
-          <End Role="VotingVideo" Type="Self.VotingVideo" Multiplicity="*" />
+          <End Role="Video" Type="db_votecontestModel.Store.Video" Multiplicity="0..1" />
+          <End Role="VotingVideo" Type="db_votecontestModel.Store.VotingVideo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Video">
               <PropertyRef Name="idVideo" />
@@ -88,25 +109,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="db_votecontestModelStoreContainer">
-          <EntitySet Name="Round" EntityType="Self.Round" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Video" EntityType="Self.Video" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="VotingVideo" EntityType="Self.VotingVideo" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Video_Round" Association="Self.FK_Video_Round">
-            <End Role="Round" EntitySet="Round" />
-            <End Role="Video" EntitySet="Video" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VotingVideo_User" Association="Self.FK_VotingVideo_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="VotingVideo" EntitySet="VotingVideo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VotingVideo_Video" Association="Self.FK_VotingVideo_Video">
-            <End Role="Video" EntitySet="Video" />
-            <End Role="VotingVideo" EntitySet="VotingVideo" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -218,6 +220,8 @@
           <Property Name="idTag" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="nameTag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="valueTag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="keyTag" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="describeTag" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -271,6 +275,8 @@
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="db_votecontestModel.Tag">
               <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="describeTag" ColumnName="describeTag" />
+                <ScalarProperty Name="keyTag" ColumnName="keyTag" />
                 <ScalarProperty Name="valueTag" ColumnName="valueTag" />
                 <ScalarProperty Name="nameTag" ColumnName="nameTag" />
                 <ScalarProperty Name="idTag" ColumnName="idTag" />

@@ -3,11 +3,12 @@
 @model List<VoteClip.Models.Round>
 @{
     ViewBag.Title = "Index";
+    List<Tag> listTag = TagService.ListTags();
 }
 <div id="main">
     <div class="inner">
         <header>
-            <img src="~/assets/images/cover.jpg" width="100%" style="border-radius: 8px;"/>
+            <img src="@listTag.Find(x => x.keyTag == "COVER_IMAGE").valueTag" width="100%" style="border-radius: 8px;"/>
         </header>
         <hr />
         
@@ -15,13 +16,13 @@
             <section>
                 <h2>Giới thiệu khoa Luật</h2>
                 <div class="videoWrapper">
-                    <iframe src="https://www.youtube.com/embed/UZjuizEYU9g" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="@listTag.Find(x => x.keyTag == "YOUTUBE_URL").valueTag" frameborder="0" allowfullscreen></iframe>
                 </div>
             </section>
             <section>
                 <h2>Follow</h2>
-                <div class="fb-page" data-href="https://www.facebook.com/khoaluatdhtdt.tdt.edu.vn" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                    <blockquote cite="https://www.facebook.com/khoaluatdhtdt.tdt.edu.vn" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/khoaluatdhtdt.tdt.edu.vn">Khoa Luật ĐH Tôn Đức Thắng</a></blockquote>
+                <div class="fb-page" data-href="@listTag.Find(x => x.keyTag == "FANPAGE_URL").valueTag" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                    <blockquote cite="@listTag.Find(x => x.keyTag == "FANPAGE_URL").valueTag" class="fb-xfbml-parse-ignore"><a href="@listTag.Find(x => x.keyTag == "FANPAGE_URL").valueTag">Khoa Luật ĐH Tôn Đức Thắng</a></blockquote>
                 </div>
             </section>
         </div>    
@@ -183,7 +184,7 @@
         <hr />
         <h2>Giải thưởng</h2>
         <section>
-            <img src="~/assets/images/poster.jpg" width="100%" style="border-radius: 8px;" />
+            <img src="@listTag.Find(x => x.keyTag == "PRIZE_IMAGE").valueTag" width="100%" style="border-radius: 8px;" />
         </section>
         
     </div>

@@ -18,7 +18,8 @@
     <link href="~/assets/admin/plugins/pace/pace-theme-big-counter.css" rel="stylesheet" />
     <link href="~/assets/admin/css/style.css" rel="stylesheet" />
     <link href="~/assets/admin/css/main-style.css" rel="stylesheet" />
-
+    
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
     <!-- Page-Level CSS -->
     <link href="~/assets/admin/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 
@@ -131,6 +132,9 @@
                         </ul>
                         <!-- second-level-items -->
                     </li>
+                    <li>
+                        <a href="/Admin/ListTags"><i class="fa fa-tags"></i>Tag</a>
+                    </li>
                 </ul>
                 <!-- end side-menu -->
             </div>
@@ -150,12 +154,23 @@
     <!-- Page-Level Plugin Scripts-->
     <script src="~/assets/admin/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="~/assets/admin/plugins/dataTables/dataTables.bootstrap.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+
+        });
+
+        $(document).on("click", ".modalUrl", function () {
+            $("#keyTag").val($(this).data('id'));
+            // As pointed out in comments, 
+            // it is superfluous to have to manually call the modal.
+            // $('#addBookDialog').modal('show');
         });
     </script>
-
 </body>
 
 </html>

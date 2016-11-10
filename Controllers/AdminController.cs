@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -68,6 +69,66 @@ namespace VoteClip.Controllers
             Video newVideo = VideoService.UpdateVideo(video);
             ViewBag.IdRound = idRound;
             return View();
+        }
+
+        public ActionResult ListTags()
+        {
+            List<Tag> listTags = TagService.ListTags();
+            return View(listTags);
+        }
+
+        [HttpPost]
+        public ActionResult Upload(Tag tag, HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    // Save file
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/uploads/"), fileName);
+                    file.SaveAs(path);
+
+                    // Update tag
+                    tag.valueTag = "/uploads/" + fileName;
+                    bool isSuccess = TagService.UpdateTag(tag);
+                    if (isSuccess)
+                    {
+                        ViewBag.Message = "Upload successful";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Upload failed";
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ViewBag.Message = "Upload failed";
+                return RedirectToAction("ListTags");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateTag(string keyTag, string urlTag)
+        {
+            try
+            {
+                Tag tag = TagService.GetTag(keyTag);
+
+                if (tag != null && urlTag != "")
+                {
+                    tag.valueTag = urlTag;
+                    bool isSuccess = TagService.UpdateTag(tag);
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ViewBag.Message = "Upload failed";
+                return RedirectToAction("ListTags");
+            }
         }
     }
 }

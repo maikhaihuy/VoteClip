@@ -17,5 +17,7 @@ namespace VoteClip.Models
         public int idTag { get; set; }
         public string nameTag { get; set; }
         public string valueTag { get; set; }
+        public string keyTag { get; set; }
+        public string describeTag { get; set; }
     }
 }
