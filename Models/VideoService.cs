@@ -159,7 +159,7 @@ namespace VoteClip.Models
 
         public static Video UpdateVideo(Video video)
         {
-            Video newvideo = null;
+            Video newvideo = new Video();
 
             db_votecontestEntities dbVoteContest = new db_votecontestEntities();
             try

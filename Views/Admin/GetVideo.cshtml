@@ -1,6 +1,6 @@
 ﻿@model VoteClip.Models.Video
 @{
-    ViewBag.Title = "GetVideo";
+    ViewBag.Title = Model.titleVideo;
     List<VoteClip.Models.Round> listRound = VoteClip.Models.RoundService.GetAllRound();
 }
 <div id="page-wrapper">
@@ -21,29 +21,59 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="/Admin/UpdateVideo" method="post">
+                            <form role="form" action="/Admin/GetVideo" method="post">
                                 @Html.HiddenFor(m => m.idVideo)
                                 <div class="form-group">
                                     <label>Tên video</label>
+                                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["titleVideo"].Errors.Count > 0)
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="sr-only">Error:</span>
+                                            @ViewData.ModelState["titleVideo"].Errors[0].ErrorMessage
+                                        </div>
+                                    }
                                     @Html.TextBoxFor(m => m.titleVideo, new { @class = "form-control" })
                                     <p class="help-block">Nhập tên bài dự thi</p>
                                 </div>
                                 <div class="form-group">
                                     <label>Tác giả</label>
+                                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["authorVideo"].Errors.Count > 0)
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="sr-only">Error:</span>
+                                            @ViewData.ModelState["authorVideo"].Errors[0].ErrorMessage
+                                        </div>
+                                    }
                                     @Html.TextBoxFor(m => m.authorVideo, new { @class = "form-control" })
-                                    <p class="help-block">Tên người dự thi</p>
+                                    <p class="help-block">Tên người dự thi.</p>
+                                    <p class="help-block">Exmaple: Nguyễn Văn A hay Nguyễn Văn A vs. Nguyễn Văn B * Phải có "vs."</p>
                                 </div>
                                 <div class="form-group">
-                                    <label>Ngày kết thúc</label>
+                                    <label>Mã số sinh viên</label>
+                                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["codeAuthor"].Errors.Count > 0)
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="sr-only">Error:</span>
+                                            @ViewData.ModelState["codeAuthor"].Errors[0].ErrorMessage
+                                        </div>
+                                    }
                                     @Html.TextBoxFor(m => m.codeAuthor, new { @class = "form-control" })
-                                    <p class="help-block">Mã số sinh viên.</p>
+                                    <p class="help-block">Mã số sinh viên người dự thi.</p>
+                                    <p class="help-block">Example: 123456 hoặc 123456 vs. 654321 * Phải có "vs.".</p>
                                 </div>
                                 <div class="form-group">
-                                    <label>Luật</label>
+                                    <label>Mô tả về video</label>
                                     @Html.TextAreaFor(m => m.describeVideo, new { @class = "form-control", rows = "3" })
                                 </div>
                                 <div class="form-group">
                                     <label>Url youtube</label>
+                                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["urlVideo"].Errors.Count > 0)
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="sr-only">Error:</span>
+                                            @ViewData.ModelState["urlVideo"].Errors[0].ErrorMessage
+                                        </div>
+                                    }
                                     @Html.TextBoxFor(m => m.urlVideo, new { @class = "form-control" })
                                     <p class="help-block">Đường dẫn youtube.</p>
                                 </div>

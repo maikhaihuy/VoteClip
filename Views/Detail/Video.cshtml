@@ -1,10 +1,17 @@
 ﻿@using VoteClip.Models
 @model Video
 @{
-    ViewBag.Title = "Video";
+    ViewBag.Title = Model.titleVideo;
     Round round = RoundService.GetRoundById((int)Model.idRound);
     string urlEmbedded = "https://www.youtube.com/embed/" + Model.urlVideo.Split('=')[1];
     string urlFull = Request.Url.ToString();
+
+    DateTime now = DateTime.Now;
+    bool expireDate = true;//round.startDate < now && round.endDate > now;
+    string codeAuthor = null;
+    string nameAuthor = null;
+    string codeAuthor1 = null, codeAuthor2 = null;
+    string nameAuthor1 = null, nameAuthor2 = null;
 }
 
 <div id="main">
@@ -30,25 +37,32 @@
             </section>
             <div style="float:right; margin-top:1em">
                 @*<button id="btnVote" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voteModal">Vote</button>*@
-                @{ if (Model.authorVideo.Contains("vs."))
+                @{ if (Model.authorVideo.Contains("vs.") && Model.codeAuthor.Contains("vs."))
                     {
                         int indexCode = Model.codeAuthor.IndexOf(" vs. ");
-                        string codeAuthor1 = Model.codeAuthor.Substring(0, indexCode);
-                        string codeAuthor2 = Model.codeAuthor.Substring(indexCode + 5, Model.codeAuthor.Length - indexCode - 5);
+                        codeAuthor1 = Model.codeAuthor.Substring(0, indexCode);
+                        codeAuthor2 = Model.codeAuthor.Substring(indexCode + 5, Model.codeAuthor.Length - indexCode - 5);
                         indexCode = Model.authorVideo.IndexOf(" vs. ");
-                        string nameAuthor1 = Model.authorVideo.Substring(0, indexCode);
-                        string nameAuthor2 = Model.authorVideo.Substring(indexCode + 5, Model.authorVideo.Length - indexCode - 5);
+                        nameAuthor1 = Model.authorVideo.Substring(0, indexCode);
+                        nameAuthor2 = Model.authorVideo.Substring(indexCode + 5, Model.authorVideo.Length - indexCode - 5);
 
-                        <h3>@codeAuthor1 - @nameAuthor1: @VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt</h3>
-                        <h3>@codeAuthor2 - @nameAuthor2: @VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt</h3>
-                        <button type="button" class="btn btn-info btn-lg" id="btnAgree">Vote @codeAuthor1</button>
-                        <button type="button" class="btn btn-info btn-lg" id="btnAgree">Vote @codeAuthor2</button>
+                        <h3>@codeAuthor1 - @nameAuthor1: @VotingVideoService.GetListUserVote(Model.idVideo, codeAuthor1).Count() lượt</h3>
+                        <h3>@codeAuthor2 - @nameAuthor2: @VotingVideoService.GetListUserVote(Model.idVideo, codeAuthor2).Count() lượt</h3>
+                        if (expireDate)
+                        {
+                            <button type="button" class="btn btn-info btn-lg" id="btnVote1">Vote @codeAuthor1</button>
+                            <button type="button" class="btn btn-info btn-lg" id="btnVote2">Vote @codeAuthor2</button>
+                        }
                     }
                     else
                     {
-
-                        <h3>@VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt vote</h3>
-                        <button type="button" class="btn btn-info btn-lg" id="btnAgree">Vote @Model.codeAuthor</button>
+                        codeAuthor = Model.codeAuthor;
+                        nameAuthor = Model.authorVideo;
+                        <h3>@codeAuthor - @nameAuthor: @VotingVideoService.GetListUserVote(Model.idVideo).Count() lượt vote</h3>
+                        if (expireDate)
+                        {
+                            <button type="button" class="btn btn-info btn-lg" id="btnVote">Vote @codeAuthor</button>
+                        }
                     }
                 }
             </div>
@@ -80,11 +94,13 @@
     $(document)
         .ready(function (data) {
             var idVideo = "@Model.idVideo";
-            var codeAuthor = "@Model.codeAuthor";
+            var codeAuthor = "@codeAuthor";
+            var codeAuthor2 = "@codeAuthor2";
+            var codeAuthor1 = "@codeAuthor1";
 
-            $('#btnAgree').click(function () {
+            $('#btnVote').click(function () {
                 bootbox.confirm("Bạn chắc chắn muốn bình chọn cho video này? \n Bạn chỉ được bình chọn một lần duy nhất và không thể bỏ bình chọn.", function (result) {
-                    if(result == "true" || result == true) {
+                    if (result == "true" || result == true) {
                         //FB.login(function (response) {
                         //    console.log('vote ' + idVideo + ' code la ' + codeAuthor);
                         //    voteClip(idVideo, codeAuthor, response);
@@ -95,7 +111,35 @@
                     }
                 });
             });
+            $('#btnVote1').click(function () {
+                bootbox.confirm("Bạn chắc chắn muốn bình chọn cho video này? \n Bạn chỉ được bình chọn một lần duy nhất và không thể bỏ bình chọn.", function (result) {
+                    if (result == "true" || result == true) {
+                        //FB.login(function (response) {
+                        //    console.log('vote ' + idVideo + ' code la ' + codeAuthor);
+                        //    voteClip(idVideo, codeAuthor, response);
+                        //}, { scope: 'email' });
+                        FB.getLoginStatus(function (response) {
+                            voteClipCallback(idVideo, codeAuthor1, response);
+                        });
+                    }
+                });
+            });
+            $('#btnVote2').click(function () {
+                bootbox.confirm("Bạn chắc chắn muốn bình chọn cho video này? \n Bạn chỉ được bình chọn một lần duy nhất và không thể bỏ bình chọn.", function (result) {
+                    if (result == "true" || result == true) {
+                        //FB.login(function (response) {
+                        //    console.log('vote ' + idVideo + ' code la ' + codeAuthor);
+                        //    voteClip(idVideo, codeAuthor, response);
+                        //}, { scope: 'email' });
+                        FB.getLoginStatus(function (response) {
+                            voteClipCallback(idVideo, codeAuthor2, response);
+                        });
+                    }
+                });
+            });
         });
+
+
     function voteClipCallback(idVideo, codeAuthor, response) {
         console.log('statusChangeCallback');
         console.log(response);
@@ -114,12 +158,18 @@
                 // Handle the response object, like in statusChangeCallback() in our demo
                 // code.
                 voteClip(idVideo, codeAuthor);
-            }, {scope: 'email'});
+            }, { scope: 'email' });
         } else {
             // The person is not logged into Facebook, so we're not sure if
             // they are logged into this app or not.
             document.getElementById('status').innerHTML = 'Please log ' +
                 'into Facebook.';
+
+            FB.login(function (response) {
+                // Handle the response object, like in statusChangeCallback() in our demo
+                // code.
+                voteClip(idVideo, codeAuthor);
+            }, { scope: 'email' });
         }
     }
     function voteClip(idVideo, codeAuthor) {
@@ -129,13 +179,14 @@
             $.ajax({
                 url: "/Detail/VoteVideo?idVideo=" + idVideo + "&codeAuthor=" + codeAuthor + "&email=" + infoUserVote
             }).done(function (data) {
-                //console.log(data.data);
-                if (data.response == true || data.response == 'true') {
-                    alert('Bạn đã bình chọn thành công cho video này');
-                }
-                else {
-                    alert('Bạn đã bình chọn bạn không thể bình chọn tiếp.');
-                }
+                console.log(data);
+                alert(data.message);
+                //if (data.isVoteSuccess == true || data.isVoteSuccess == 'true') {
+                //    alert('Bạn đã bình chọn thành công cho video ' + data.titleVideo + ' của thí sinh ' + data.codeAuthor);
+                //}
+                //else {
+                //    alert('Bạn đã bình chọn ' + data.titleVideo + ' của thí sinh '+ data.codeAuthor +' bạn không thể bình chọn tiếp.');
+                //}
             }).fail(function (data) {
                 console.log(data);
             });

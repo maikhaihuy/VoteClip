@@ -22,7 +22,7 @@
             <!-- Advanced Tables -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <button class="btn btn-primary" onclick="location.href = '/Admin/GetVideo?idVideo=0'">Thêm mới video</button>
+                    <button class="btn btn-primary" onclick="location.href = '/Admin/GetVideo'">Thêm mới video</button>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -49,6 +49,9 @@
                                         {
                                             classTr = "odd gradeX";
                                         }
+
+
+
                                         <tr class="@classTr">
                                             <td>@index</td>
                                             <td>@video.titleVideo</td>
@@ -56,7 +59,29 @@
                                             <td>@video.codeAuthor</td>
                                             <td class="center">@video.describeVideo</td>
                                             <td class="center">@video.urlVideo</td>
-                                            <td class="center">@VotingVideoService.GetListUserVote(video.idVideo).Count()</td>
+                                            @{
+                                                if (video.codeAuthor.Contains("vs.") && video.authorVideo.Contains("vs."))
+                                                {
+                                                    int indexCode = video.codeAuthor.IndexOf(" vs. ");
+                                                    string codeAuthor1 = video.codeAuthor.Substring(0, indexCode);
+                                                    string codeAuthor2 = video.codeAuthor.Substring(indexCode + 5, video.codeAuthor.Length - indexCode - 5);
+                                                    indexCode = video.authorVideo.IndexOf(" vs. ");
+                                                    string nameAuthor1 = video.authorVideo.Substring(0, indexCode);
+                                                    string nameAuthor2 = video.authorVideo.Substring(indexCode + 5, video.authorVideo.Length - indexCode - 5);
+
+                                                    <td class="center">
+                                                        @codeAuthor1 - @nameAuthor1: @VotingVideoService.GetListUserVote(video.idVideo, codeAuthor1).Count()
+                                                        <br />
+                                                        @codeAuthor1 - @nameAuthor1: @VotingVideoService.GetListUserVote(video.idVideo, codeAuthor1).Count()
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="center">
+                                                        @VotingVideoService.GetListUserVote(video.idVideo).Count()
+                                                    </td>
+                                                }
+                                            }
                                             <td><a href="/Admin/GetVideo?idVideo=@video.idVideo">Chỉnh sửa</a></td>
                                         </tr>
                                         index = index + 1;

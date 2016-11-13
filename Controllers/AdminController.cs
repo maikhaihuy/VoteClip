@@ -52,23 +52,52 @@ namespace VoteClip.Controllers
             return View();
         }
 
-        public ActionResult GetVideo(int idVideo)
+        public ActionResult GetVideo(int? idVideo)
         {
             Video video = new Video();
-            if (idVideo != 0)
+            if (idVideo.HasValue)
             {
-                video = VideoService.GetVideoById(idVideo);
+                video = VideoService.GetVideoById(((int)idVideo));
             }
             return View(video);
         }
 
         [HttpPost]
-        public ActionResult UpdateVideo(Video video, int idRound)
+        public ActionResult GetVideo(Video video, int idRound)
         {
-            video.idRound = idRound;
-            Video newVideo = VideoService.UpdateVideo(video);
-            ViewBag.IdRound = idRound;
-            return View();
+            bool isValide = true;
+            if(string.IsNullOrEmpty(video.authorVideo))
+            {
+                ModelState.AddModelError("authorVideo", "Cần điền tên tác giả video");
+            }
+            if(string.IsNullOrEmpty(video.codeAuthor))
+            {
+                ModelState.AddModelError("codeAuthor", "Cần điền mã số sinh viên tác giả video");
+            }
+            if (string.IsNullOrEmpty(video.titleVideo))
+            {
+                ModelState.AddModelError("titleVideo", "Cần điền tên video");
+            }
+            if (string.IsNullOrEmpty(video.urlVideo))
+            {
+                ModelState.AddModelError("urlVideo", "Cần điền tên url video");
+            }
+
+            if(ModelState.IsValid)
+            {
+                video.idRound = idRound;
+                Video newVideo = VideoService.UpdateVideo(video);
+                return RedirectToAction("UpdateVideo", new { idRound = idRound });
+            }
+            else
+            {
+                return View(video);
+            }
+        }
+
+        public ActionResult UpdateVideo(int idRound)
+        {
+            return View(idRound);
         }
 
         public ActionResult ListTags()

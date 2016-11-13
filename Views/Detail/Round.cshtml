@@ -1,8 +1,8 @@
 ﻿@using VoteClip.Models
 @model List<Video>
 @{
-    ViewBag.Title = "Round";
     Round round = VoteClip.Models.RoundService.GetRoundById(ViewBag.IdRound);
+    ViewBag.Title = "Danh sách video " + round.nameRound;
     int indexVideo = 1;
 }
 <div id="main">

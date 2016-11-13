@@ -23,13 +23,15 @@ namespace VoteClip.Controllers
             int skip = (int)page*(int)item;
             List<Video> listVideo = new List<Video>();
 
-            if (sort == 1)
-            {
-                listVideo = VideoService.GetVideosByRound_New(idRound, skip, (int) item, out total);
-            } else if (sort == 2)
-            {
-                listVideo = VideoService.GetVideosByRound_Most(idRound, skip, (int) item, out total);
-            }
+            //if (sort == 1)
+            //{
+            //    listVideo = VideoService.GetVideosByRound_New(idRound, skip, (int) item, out total);
+            //} else if (sort == 2)
+            //{
+            //    listVideo = VideoService.GetVideosByRound_Most(idRound, skip, (int) item, out total);
+            //}
+
+            listVideo = VideoService.GetAllVideosByMost(idRound);
 
             ViewBag.IdRound = idRound;
 
@@ -38,22 +40,49 @@ namespace VoteClip.Controllers
 
         public ActionResult Video(int idVideo)
         {
-            Video video = VideoService.GetVideoById(idVideo);
+            Video video = new Video();
+            if (idVideo != 0)
+            {
+                video = VideoService.GetVideoById(idVideo);
+            }
             return View(video);
         }
 
-        public ActionResult VoteVideo(int idVideo, string codeAuthor, string email)
+        public JsonResult VoteVideo(int idVideo, string codeAuthor, string email)
         {
-            User user = UserService.AddUser(email);
-            Video videoVote = VotingVideoService.AddVote(idVideo, codeAuthor, user.idUser);
-            bool isVoteSuccess = false;
+            ModelVideoVote modelVideo = new ModelVideoVote();
 
-            if(videoVote.idVideo == idVideo)
+            if (!string.IsNullOrEmpty(email) && !email.Equals("undefined"))
             {
-                isVoteSuccess = true;
-            }
+                User user = UserService.AddUser(email);
+                Video videoVote = VotingVideoService.AddVote(idVideo, codeAuthor, user.idUser);
 
-            return base.Json(new { response = isVoteSuccess }, JsonRequestBehavior.AllowGet);
+                if(videoVote == null)
+                {
+                    modelVideo.message = "Chưa đến hạn hoặc hết hạn bình chọn.";
+                }
+                else
+                if (videoVote.idVideo == idVideo && videoVote.codeAuthor.Equals(codeAuthor))
+                {
+                    modelVideo.message = "Bạn đã bình chọn thành công cho video " + videoVote.titleVideo + " của thí sinh " + videoVote.codeAuthor;
+                }
+                else
+                {
+                    modelVideo.message = "Bạn đã bình chọn " + videoVote.titleVideo + " của thí sinh " + videoVote.codeAuthor + " bạn không thể bình chọn tiếp.";
+                }
+            }
+            else
+            {
+                modelVideo.message = "Lỗi kết nối!!!";
+            }
+            return base.Json(modelVideo, JsonRequestBehavior.AllowGet);
+        }
+
+        class ModelVideoVote
+        {
+            public string titleVideo { get; set; }
+            public string codeAuthor { get; set; }
+            public string message { get; set; }
         }
     }
 }
