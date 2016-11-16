@@ -7,6 +7,7 @@ using VoteClip.Models;
 
 namespace VoteClip.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         //
